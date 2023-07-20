@@ -53,7 +53,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 // Define el controlador y método por defecto cuando no se especifica una ruta en la URL.
-$route['default_controller'] = 'project/index';
+
+
+// $route['default_controller'] = 'project/index';
+
+//$route['default_controller'] = 'area/index';
+
+$route['default_controller'] = 'supervisor/index';
 
 // Permite establecer una ruta personalizada para manejar las páginas de error 404 (páginas no encontradas).
 $route['404_override'] = '';
@@ -82,3 +88,52 @@ $route['project/delete/(:num)']['delete'] = "project/delete/$1";
 // Ruta personalizada para acceder al método 'show' del controlador 'project' con un parámetro numérico (ID) en la URL.
 $route['project/show/(:num)'] = "project/show/$1";
 
+
+
+
+
+// Ruta personalizada para acceder al método 'index' del controlador 'area'.
+$route['area'] = "area/index";
+
+// Ruta personalizada para acceder al método 'create' del controlador 'area'.
+$route['area/create'] = "area/create"; 
+
+// Ruta personalizada para acceder al método 'store' del controlador 'area' utilizando el verbo HTTP POST.
+$route['area/store']['post'] = "area/store";
+
+// Ruta personalizada para acceder al método 'edit' del controlador 'area' con un parámetro numérico (ID) en la URL.
+$route['area/edit/(:num)'] = "area/edit/$1";
+
+// Ruta personalizada para acceder al método 'update' del controlador 'area' utilizando el verbo HTTP PUT y con un parámetro numérico (ID) en la URL.
+$route['area/update/(:num)']['put'] = "area/update/$1";
+
+// Ruta personalizada para acceder al método 'delete' del controlador 'area' utilizando el verbo HTTP DELETE y con un parámetro numérico (ID) en la URL.
+$route['area/delete/(:num)']['delete'] = "area/delete/$1";
+
+// Ruta personalizada para acceder al método 'show' del controlador 'area' con un parámetro numérico (ID) en la URL.
+$route['area/show/(:num)'] = "area/show/$1";
+
+
+
+
+
+// Ruta personalizada para acceder al método 'index' del controlador 'supervisor'.
+$route['supervisor'] = "supervisor/index";
+
+// Ruta personalizada para acceder al método 'create' del controlador 'supervisor'.
+$route['supervisor/create'] = "supervisor/create"; 
+
+// Ruta personalizada para acceder al método 'store' del controlador 'supervisor' utilizando el verbo HTTP POST.
+$route['supervisor/store']['post'] = "supervisor/store";
+
+// Ruta personalizada para acceder al método 'edit' del controlador 'supervisor' con un parámetro numérico (ID) en la URL.
+$route['supervisor/edit/(:num)'] = "supervisor/edit/$1";
+
+// Ruta personalizada para acceder al método 'update' del controlador 'supervisor' utilizando el verbo HTTP PUT y con un parámetro numérico (ID) en la URL.
+$route['supervisor/update/(:num)']['put'] = "supervisor/update/$1";
+
+// Ruta personalizada para acceder al método 'delete' del controlador 'supervisor' utilizando el verbo HTTP DELETE y con un parámetro numérico (ID) en la URL.
+$route['supervisor/delete/(:num)']['delete'] = "supervisor/delete/$1";
+
+// Ruta personalizada para acceder al método 'show' del controlador 'supervisor' con un parámetro numérico (ID) en la URL.
+$route['supervisor/show/(:num)'] = "supervisor/show/$1";
