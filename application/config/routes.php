@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //$route['default_controller'] = 'area/index';
 
-$route['default_controller'] = 'supervisor/index';
+$route['default_controller'] = 'project/index';
 
 // Permite establecer una ruta personalizada para manejar las páginas de error 404 (páginas no encontradas).
 $route['404_override'] = '';

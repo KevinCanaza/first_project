@@ -47,6 +47,29 @@
                     rows="3"
                     name="description"><?php echo $project->description;?></textarea>
             </div>
+
+            <div class="form-group">
+                <label for="area">Area</label>
+                <select class="form-control" id="area" name="area">
+                    <option value="" disabled selected>Select an Area</option>
+                    <?php foreach ($areas as $area) : ?>
+                        <option value="<?php echo $area->id; ?>" <?php echo ($project->area_id == $area->id) ? 'selected' : ''; ?>>
+                            <?php echo $area->name; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="supervisor">Supervisor</label>
+                <select class="form-control" id="supervisor" name="supervisor">
+                    <option value="" disabled selected>Select a Supervisor</option>
+                    <?php foreach ($supervisors as $supervisor) : ?>
+                        <option value="<?php echo $supervisor->id; ?>" <?php echo ($project->supervisor_id == $supervisor->id) ? 'selected' : ''; ?>>
+                            <?php echo $supervisor->name; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
           
             <!-- Botón para enviar el formulario y guardar los cambios del proyecto -->
             <button type="submit" class="btn btn-outline-primary">Save Project</button>

@@ -10,16 +10,25 @@ class Project_model extends CI_Model{
 		// Carga el helper URL para trabajar con URLs de manera más sencilla base_url()
 		$this->load->helper('url');
 	}
-
+ 
     // Método para obtener todos los proyectos con estado activo (status = 1)
-	public function get_all(){
-		// Define una condición para la consulta: obtener solo proyectos con 'status' igual a 1 (activo)
-		$this->db->where('status', 1);
-		// Realiza la consulta a la tabla 'projects' y obtiene los resultados como un array de objetos
-		$projects = $this->db->get("projects")->result();
-		// Devuelve el array de proyectos obtenidos
-		return $projects;
-	}
+   // Método para obtener todos los proyectos con estado activo (status = 1) junto con sus áreas y supervisores
+   public function get_all()
+   {
+       // Selecciona los campos deseados de la tabla projects y los campos 'name' de las tablas areas y supervisors
+       $this->db->select('projects.*, area.name as area_name, supervisor.name as supervisor_name');
+       // Define una condición para la consulta: obtener solo proyectos con 'status' igual a 1 (activo)
+       $this->db->where('projects.status', 1);
+       // Realiza el LEFT JOIN con la tabla 'areas' usando la clave foránea 'area_id'
+       $this->db->join('area AS area', 'area.id = projects.area_id', 'left');
+       // Realiza el LEFT JOIN con la tabla 'supervisors' usando la clave foránea 'supervisor_id'
+       $this->db->join('supervisor AS supervisor', 'supervisor.id = projects.supervisor_id', 'left');
+       // Realiza la consulta a la tabla 'projects' y obtiene los resultados como un array de objetos
+       $projects = $this->db->get("projects")->result();
+       // Devuelve el array de proyectos obtenidos
+       return $projects;
+   }
+
 
     // Método para guardar un nuevo proyecto en la base de datos
 	public function store()
@@ -28,6 +37,9 @@ class Project_model extends CI_Model{
 		$data = [
 			'name' => $this->input->post('name'),
 			'description' => $this->input->post('description'),
+
+            'area_id' => $this->input->post('area'),
+			'supervisor_id' => $this->input->post('supervisor'),
 		];
 
 		// Inserta los datos del nuevo proyecto en la tabla 'projects' de la base de datos
@@ -45,13 +57,30 @@ class Project_model extends CI_Model{
         return $project;
     }
 
+    public function get_project($id)
+    {
+        // Selecciona los campos deseados de la tabla projects y los campos 'name' de las tablas areas y supervisors
+        $this->db->select('projects.*, area.name as area_name, supervisor.name as supervisor_name');
+        // Realiza el LEFT JOIN con la tabla 'areas' usando la clave foránea 'area_id'
+        $this->db->join('area', 'area.id = projects.area_id', 'left');
+        // Realiza el LEFT JOIN con la tabla 'supervisors' usando la clave foránea 'supervisor_id'
+        $this->db->join('supervisor', 'supervisor.id = projects.supervisor_id', 'left');
+        // Realiza una consulta a la tabla 'projects' buscando un proyecto con el ID especificado
+        $project = $this->db->get_where('projects', ['projects.id' => $id])->row();
+        // Devuelve el resultado de la consulta (un solo objeto representando el proyecto encontrado)
+        return $project;
+    }
+
     // Método para actualizar un proyecto existente en la base de datos por su ID
 	public function update($id) 
     {
         // Obtiene los nuevos datos del proyecto desde el formulario enviado a través del método POST
         $data = [
             'name'        => $this->input->post('name'),
-            'description' => $this->input->post('description')
+            'description' => $this->input->post('description'),
+
+            'area_id'        => $this->input->post('area'),
+            'supervisor_id' => $this->input->post('supervisor')
         ];
  
         // Actualiza los datos del proyecto en la tabla 'projects' basándose en el ID proporcionado

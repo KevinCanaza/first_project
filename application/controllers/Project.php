@@ -16,6 +16,9 @@ class Project extends CI_Controller{
 		$this->load->library('session');
 		// Carga el modelo 'Project_model' utilizando el alias 'project' para poder acceder a sus métodos
 		$this->load->model('Project_model', 'project');
+
+		$this->load->model('Area_model', 'area');
+		$this->load->model('Supervisor_model', 'supervisor');
 	}
 
 	// Método para mostrar la página principal que lista todos los proyectos
@@ -38,6 +41,10 @@ class Project extends CI_Controller{
 	// Método para mostrar la página de creación de un nuevo proyecto
 	public function create()
 	{
+
+		$data['areas'] = $this->area->get_all();
+		$data['supervisors'] = $this->supervisor->get_all();
+
 		// Define el título de la página
 		$data['title'] = "Create Project";
 		// Carga la vista 'header'
@@ -48,33 +55,45 @@ class Project extends CI_Controller{
 		$this->load->view('project/footer');
 	}
 
-	// Método para guardar los datos del nuevo proyecto en la base de datos
+
 	public function store()
 	{
 		// Define las reglas de validación para los campos 'name' y 'description' del formulario
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
-   
+		$this->form_validation->set_rules('area', 'Area', 'required');
+		$this->form_validation->set_rules('supervisor', 'Supervisor', 'required');
+	
 		// Verifica si las reglas de validación se cumplen o no
 		if (!$this->form_validation->run())
 		{
-			// Si la validación falla, establece un mensaje de error en la sesión y redirecciona a la página de creación de proyectos
-			$this->session->set_flashdata('errors', validation_errors());
-			redirect(base_url('project/create'));
+			// Si la validación falla, devuelve un mensaje de error en formato JSON
+			$response['status'] = 'error';
+			$response['message'] = validation_errors();
 		}
 		else
 		{
 			// Si la validación es exitosa, guarda los datos del nuevo proyecto utilizando el método 'store' del modelo 'Project_model'
 			$this->project->store();
-			// Establece un mensaje de éxito en la sesión y redirecciona a la página principal de proyectos
+			// Establece un mensaje de éxito en la sesión
 			$this->session->set_flashdata('success', "Saved Successfully!");
-			redirect(base_url('project'));
+			// Devuelve un mensaje de éxito en formato JSON
+			$response['status'] = 'success';
+			$response['message'] = 'Proyecto guardado exitosamente.';
 		}
+	
+		// Devuelve la respuesta JSON al cliente
+		header('Content-Type: application/json');
+		echo json_encode($response);
 	}
 
 	// Método para mostrar la página de edición de un proyecto existente
 	public function edit($id)
 	{
+
+		$data['areas'] = $this->area->get_all();
+		$data['supervisors'] = $this->supervisor->get_all();
+
 		// Obtiene los datos del proyecto con el ID especificado utilizando el método 'get' del modelo 'Project_model'
 		$data['project'] = $this->project->get($id);
 		// Define el título de la página
@@ -93,6 +112,9 @@ class Project extends CI_Controller{
 		// Define las reglas de validación para los campos 'name' y 'description' del formulario
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
+
+		$this->form_validation->set_rules('area', 'Area', 'required');
+		$this->form_validation->set_rules('supervisor', 'Supervisor', 'required');
 
 		// Verifica si las reglas de validación se cumplen o no
 		if (!$this->form_validation->run()) {
@@ -122,7 +144,7 @@ class Project extends CI_Controller{
 	public function show($id)
 	{
 		// Obtiene los datos del proyecto con el ID especificado utilizando el método 'get' del modelo 'Project_model'
-		$data['project'] = $this->project->get($id);
+		$data['project'] = $this->project->get_project($id);
 		// Define el título de la página
 		$data['title'] = "Show Project";
 		// Carga la vista 'header'

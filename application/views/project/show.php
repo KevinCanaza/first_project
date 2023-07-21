@@ -25,6 +25,16 @@
         <b class="text-muted">Description:</b>
         <!-- Muestra el valor de la descripción del proyecto -->
         <p><?php echo $project->description;?></p>
+
+                <!-- Muestra el nombre del proyecto en negrita -->
+                <b class="text-muted">Area:</b>
+        <!-- Muestra el valor del nombre del proyecto -->
+        <p><?php echo $project->area_name;?></p>
+
+        <!-- Muestra la descripción del proyecto en negrita -->
+        <b class="text-muted">Supervisor:</b>
+        <!-- Muestra el valor de la descripción del proyecto -->
+        <p><?php echo $project->supervisor_name;?></p>
        
     </div>
 </div>
