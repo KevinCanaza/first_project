@@ -23,16 +23,16 @@ class Area extends CI_Controller{
 		// Obtiene todos los proyectos activos (status = 1) desde el modelo y los almacena en el array $data['areas']
 		$data['areas'] = $this->area->get_all();
 		// Define el título de la página
-		$data['title'] = "First area";
+		$data['title'] = "Area";
 		
 		// Carga la vista 'header' que contiene la parte superior de la página
-		$this->load->view('project/header');
+		$this->load->view('layout/header');
 
 		// Carga la vista 'index' que muestra la lista de proyectos y pasa los datos del array $data
 		$this->load->view('area/index', $data);
 
 		// Carga la vista 'footer' que contiene la parte inferior de la página
-		$this->load->view('project/footer');
+		$this->load->view('layout/footer');
 	}
 
 	// Método para mostrar la página de creación de un nuevo proyecto
@@ -41,11 +41,11 @@ class Area extends CI_Controller{
 		// Define el título de la página
 		$data['title'] = "Create Area";
 		// Carga la vista 'header'
-		$this->load->view('project/header');
+		$this->load->view('layout/header');
 		// Carga la vista 'create' que muestra el formulario de creación de proyectos y pasa los datos del array $data
 		$this->load->view('area/create', $data);
 		// Carga la vista 'footer'
-		$this->load->view('project/footer');
+		$this->load->view('layout/footer');
 	}
 
 	// Método para guardar los datos del nuevo proyecto en la base de datos
@@ -81,11 +81,11 @@ class Area extends CI_Controller{
 		// Define el título de la página
 		$data['title'] = "Edit Area";
 		// Carga la vista 'header'
-		$this->load->view('project/header');
+		$this->load->view('layout/header');
 		// Carga la vista 'edit' que muestra el formulario de edición de proyectos y pasa los datos del array $data
 		$this->load->view('area/edit', $data);
 		// Carga la vista 'footer'
-		$this->load->view('project/footer');
+		$this->load->view('layout/footer');
 	}
 
 	// Método para actualizar los datos de un proyecto existente en la base de datos
@@ -128,10 +128,10 @@ class Area extends CI_Controller{
 		// Define el título de la página
 		$data['title'] = "Show Area";
 		// Carga la vista 'header'
-		$this->load->view('project/header');
+		$this->load->view('layout/header');
 		// Carga la vista 'show' que muestra los detalles del proyecto y pasa los datos del array $data
 		$this->load->view('area/show', $data);
 		// Carga la vista 'footer'
-		$this->load->view('project/footer'); 
+		$this->load->view('layout/footer'); 
 	}
 }

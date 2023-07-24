@@ -31,17 +31,8 @@ class Project_model extends CI_Model{
 
 
     // Método para guardar un nuevo proyecto en la base de datos
-	public function store()
+	public function store($data)
 	{
-		// Obtiene los datos del nuevo proyecto desde el formulario enviado a través del método POST
-		$data = [
-			'name' => $this->input->post('name'),
-			'description' => $this->input->post('description'),
-
-            'area_id' => $this->input->post('area'),
-			'supervisor_id' => $this->input->post('supervisor'),
-		];
-
 		// Inserta los datos del nuevo proyecto en la tabla 'projects' de la base de datos
 		$result = $this->db->insert('projects', $data);
 		// Devuelve el resultado de la operación de inserción (true o false)
@@ -72,17 +63,8 @@ class Project_model extends CI_Model{
     }
 
     // Método para actualizar un proyecto existente en la base de datos por su ID
-	public function update($id) 
-    {
-        // Obtiene los nuevos datos del proyecto desde el formulario enviado a través del método POST
-        $data = [
-            'name'        => $this->input->post('name'),
-            'description' => $this->input->post('description'),
-
-            'area_id'        => $this->input->post('area'),
-            'supervisor_id' => $this->input->post('supervisor')
-        ];
- 
+	public function update($id,$data) 
+    { 
         // Actualiza los datos del proyecto en la tabla 'projects' basándose en el ID proporcionado
         $result = $this->db->where('id', $id)->update('projects', $data);
         // Devuelve el resultado de la operación de actualización (true o false)
